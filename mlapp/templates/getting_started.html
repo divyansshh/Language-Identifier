@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Identifier</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap">
+    {% load static %}
+    <style>
+        /* Static background setup */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            background: url("{% static 'Letter cloud 1.webp' %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+        }
+
+        /* Content container */
+        .content {
+            transition: transform 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #12e0cf;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #08e9f1;
+            margin: 10px 0 20px;
+        }
+
+        .get-started-btn {
+            font-size: 1em;
+            padding: 10px 20px;
+            background-color: #a809f3;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Hover effect for both buttons */
+        .get-started-btn:hover {
+            background-color: #4b0a65;
+        }
+
+        .arrow {
+            display: inline-block;
+            margin-left: 10px;
+            transition: transform 0.3s;
+        }
+
+        /* Button Container for About Us and Contact Us buttons (Right side) */
+        .button-container {
+            position: absolute;  /* Absolute positioning to place it at the top right */
+            right: 20px;  /* 20px from the right */
+            top: 20px;   /* 20px from the top */
+            display: flex;
+            gap: 15px;   /* Space between buttons */
+        }
+
+        /* Adjusted container to center the Get Started button */
+        .get-started-btn-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Button Container for About Us and Contact Us buttons (Right side) -->
+    <div class="button-container">
+        <button class="get-started-btn" onclick="goToAboutPage()">About Us</button>
+        <button class="get-started-btn" onclick="goToContactPage()">Contact Us</button>
+    </div>
+
+    <!-- Sliding Content -->
+    <div class="content" id="content">
+        <div class="container get-started-btn-container">
+            <h1>Language Identifier</h1>
+            <p>Discover the language of any text effortlessly. Click below to start identifying languages in seconds!</p>
+            <button class="get-started-btn" onclick="goToSecondPage()">Get Started <span class="arrow">➔</span></button>
+        </div>
+    </div>
+
+    <script>
+        // Function to go to the second page
+        function goToSecondPage() {
+            const content = document.getElementById("content");
+            content.style.transform = "translateX(-100vw)";
+            setTimeout(() => {
+                window.location.href = "{% url 'home' %}";
+            }, 500); // Match the duration of the transition
+        }
+
+        // Function to go to the About Us page
+        function goToAboutPage() {
+            window.location.href = "{% url 'about' %}"; // Redirect to about us page
+        }
+
+        // Function to go to the Contact Us page
+        function goToContactPage() {
+            window.location.href = "{% url 'contact' %}"; // Redirect to contact us page
+        }
+    </script>
+</body>
+</html>

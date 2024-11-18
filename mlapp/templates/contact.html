@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap">
+    {% load static %}
+    <style>
+        /* Fullscreen static background setup */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            background-color: #352437;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+        }
+
+        /* Main content area */
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+            transition: transform 0.5s ease;
+        }
+
+        /* Contact form container */
+        .contact-container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6); /* Dark semi-transparent background */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 86, 179, 0.5);
+            max-width: 500px;
+            width: 90%;
+            animation: fadeIn 1s ease, slideUp 1s ease;
+        }
+
+        /* Fade-in and slide-up animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Title styling */
+        .contact-title {
+            font-size: 2.5em;
+            color: #12e0cf;
+            font-family: 'Dancing Script', cursive;
+            margin-bottom: 20px;
+        }
+
+        /* Form styling */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            font-size: 1em;
+            padding: 10px;
+            border: 2px solid #0056b3;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #ffcc00;
+        }
+
+        /* Submit button styling */
+        .contact-form button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            background-color: #a809f3;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #4b0a65;
+            transform: scale(1.05);
+        }
+
+        /* Lighting effect */
+        .lighting {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 30%, transparent 70%);
+            pointer-events: none;
+            animation: pulse 3s infinite alternate;
+        }
+
+        /* Button positioning */
+        .button-container {
+            position: absolute;  /* Absolute positioning to place it at the top right */
+            right: 20px;  /* 20px from the right */
+            top: 20px;   /* 20px from the top */
+            display: flex;
+            gap: 15px;   /* Space between buttons */
+        }
+
+        /* Button design */
+        .get-started-btn {
+            font-size: 1em;
+            padding: 10px 20px;
+            background-color: #a809f3;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .get-started-btn:hover {
+            background-color: #4b0a65;
+        }
+
+        .arrow {
+            display: inline-block;
+            margin-left: 10px;
+            transition: transform 0.3s;
+        }
+
+        /* Pulse animation for the lighting effect */
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            100% { opacity: 0.9; }
+        }
+
+        /* Back Arrow Styling */
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 2em;
+            color: #12e0cf;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .back-arrow:hover {
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Arrow Button -->
+    <div class="back-arrow" onclick="goBack()">&larr;</div>
+
+    <!-- Button Container for About Us, Contact Us, and Home buttons (Right side) -->
+    <div class="button-container">
+        <button class="get-started-btn" onclick="goToHomePage()">Home</button>
+        <button class="get-started-btn" onclick="goToAboutPage()">About Us</button>
+    </div>
+
+    <div class="content">
+        <div class="contact-container">
+            <div class="lighting"></div>
+            <h1 class="contact-title">Contact Us</h1>
+            <form class="contact-form" action="/submit_contact" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <input type="text" name="subject" placeholder="Subject" required>
+                <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+                <button type="submit"><span>Send Message</span></button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Function to go to the About Us page
+        function goToAboutPage() {
+            window.location.href = "{% url 'about' %}"; // Redirect to about us page
+        }
+
+        // Function to go to the Home page
+        function goToHomePage() {
+            window.location.href = "{% url 'started' %}"; // Redirect to home page
+        }
+
+        // Function to go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

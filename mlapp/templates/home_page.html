@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Identifier</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap">
+    {% load static %}
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: url("{% static 'Letter cloud 1.webp' %}") no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+            transition: transform 0.5s ease;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #12e0cf;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .textbox {
+            width: calc(100% - 30px);
+            max-height: 150px;
+            min-height: 30px;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 150px 0px 20px;
+            font-size: 1em;
+            color: #333;
+            background-color: #e3aafe;
+            resize: none;
+            overflow-y: auto;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
+            line-height: 1.5;
+            margin-bottom: 10px; /* Add some space below the textbox */
+        }
+
+        /* Style scrollbar */
+        .textbox::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .textbox::-webkit-scrollbar-thumb {
+            background-color: #a809f3;
+            border-radius: 25px;
+            cursor: initial;
+        }
+
+        .textbox::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 2em;
+            color: #12e0cf;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .back-arrow:hover {
+            transform: translateX(-5px);
+        }
+
+        .buttons-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .about-btn, .Identify-btn, .contact-btn {
+            font-size: 1em;
+            padding: 10px 20px;
+            background-color: #a809f3;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .Identify-btn:hover, .about-btn:hover, .contact-btn:hover {
+            background-color: #4b0a65;
+        }
+
+        .result {
+            text-align: center;
+            background-color: #a809f3;
+            padding: 20px;
+            margin-top: 10px; /* Reduced margin to keep it closer to the textbox */
+            border-radius: 10px;
+            color: #ffffff;
+            max-width: 80%;
+            margin: 10px auto; /* Center align with less margin */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="back-arrow" onclick="goBack()">&larr;</div>
+
+    <!-- Buttons Container -->
+    <div class="buttons-container">
+        <button class="about-btn" onclick="goToAboutPage()">About Us</button>
+        <button class="contact-btn" onclick="goToContactPage()">Contact Us</button>
+    </div>
+
+    <div class="content" id="content">
+        <div class="container">
+            <h1>Language Identifier</h1>
+            <form method="post">
+                {% csrf_token %}
+                <textarea class="textbox" placeholder="Type your text here..." name="text_input" id="text_input" oninput="adjustHeight(this)"></textarea>
+                {% if predicted_language %}
+                    <div class="result">
+                        <h4> Text: {{ input_text }}</h4>
+                        <h3> Language: {{ predicted_language }}</h3>
+                    </div>
+                {% endif %}
+                <button class="Identify-btn" type="submit">Identify</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            const content = document.getElementById("content");
+            content.style.transform = "translateX(100vw)";
+            setTimeout(() => {
+                window.location.href = "{% url 'started' %}";
+            }, 500);
+        }
+
+        function adjustHeight(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = `${textarea.scrollHeight}px`;
+        }
+
+        function goToAboutPage() {
+            window.location.href = "{% url 'about' %}";
+        }
+
+        function goToContactPage() {
+            window.location.href = "{% url 'contact' %}";  // Redirect to contact us page
+        }
+    </script>
+</body>
+</html>

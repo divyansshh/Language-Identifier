@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap">
+    {% load static %}
+    <style>
+        /* Fullscreen static background setup */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            background-color: #352437; /* Solid color background */
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+        }
+
+        /* Main content area */
+        .content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+            transition: transform 0.5s ease;
+        }
+
+        /* About Us container */
+        .about-container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6); /* Dark semi-transparent background */
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 86, 179, 0.5);
+            max-width: 800px; /* Increased width */
+            width: 90%;
+            max-height: 80vh; /* Prevents box from becoming too large */
+            overflow-y: auto; /* Makes the box scrollable */
+            animation: fadeIn 1s ease, slideUp 1s ease;
+        }
+
+        /* Fade-in and slide-up animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Title styling */
+        .about-title {
+            font-size: 2.5em;
+            color: #12e0cf;
+            font-family: 'Dancing Script', cursive;
+            margin-bottom: 20px;
+        }
+
+        /* Description text */
+        .about-description {
+            font-size: 1.2em;
+            color: #08e9f1; /* Keeping previous text color */
+            margin-bottom: 30px;
+            line-height: 1.5;
+            max-width: 80%; /* Ensures the description stays two lines */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Member List Styling */
+        .members-list {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .member {
+            text-align: center;
+            color: #08e9f1; /* Keeping previous text color */
+        }
+
+        .member img {
+            border-radius: 50%;
+            width: 200px; /* Increased profile image size */
+            height: 200px; /* Increased profile image size */
+            object-fit: cover;
+        }
+
+        .member-name {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* Button container and styling */
+        .button-container {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .get-started-btn {
+            font-size: 1em;
+            padding: 10px 20px;
+            background-color: #a809f3;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .get-started-btn:hover {
+            background-color: #4b0a65;
+        }
+
+        /* Back Arrow Styling */
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 2em;
+            color: #cf12e0;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .back-arrow:hover {
+            transform: translateX(-5px);
+        }
+
+        /* Pulse animation for the lighting effect */
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            100% { opacity: 0.9; }
+        }
+
+        /* Lighting effect */
+        .lighting {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 30%, transparent 70%);
+            pointer-events: none;
+            animation: pulse 3s infinite alternate;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Arrow Button -->
+    <div class="back-arrow" onclick="goBack()">&larr;</div>
+
+    <!-- Button Container for About Us, Contact Us, and Home buttons (Right side) -->
+    <div class="button-container">
+        <button class="get-started-btn" onclick="goToHomePage()">Home</button>
+        <button class="get-started-btn" onclick="goToContactPage()">Contact Us</button>
+    </div>
+
+    <div class="content">
+        <div class="about-container">
+            <div class="lighting"></div>
+            <h1 class="about-title">About Us</h1>
+            <p class="about-description">
+                Welcome to our Language Identifier tool! We aim to help users quickly and accurately identify the language of any given text.
+            </p>
+
+            <!-- Member List Section -->
+            <div class="members-list">
+                <div class="member">
+                    <img src="{% static 'photo1.jpg' %}" alt="Team Member 1">
+                    <div class="member-name">Naveen Yadav</div>
+                    <div>Machine Learning & Frontend</div>
+                </div>
+                <div class="member">
+                    <img src="{% static 'photo4-removebg-preview.png' %}" alt="Team Member 2">
+                    <div class="member-name">Divyansh Rathore</div>
+                    <div>Machine Learning & Backend</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to go to the Contact Us page
+        function goToContactPage() {
+            window.location.href = "{% url 'contact' %}"; // Redirect to contact page
+        }
+
+        // Function to go to the Home page
+        function goToHomePage() {
+            window.location.href = "{% url 'started' %}"; // Redirect to home page
+        }
+
+        // Function to go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
